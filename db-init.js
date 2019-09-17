@@ -1,8 +1,10 @@
 const Sequelize = require("sequelize")
+const config = require('./config')
 const db = {}
-const sequelize = new Sequelize("soske_maindb", "root", "mysql20190611", {
-    host: "soske-db",
-    dialect: "mysql",
+const sequelize = new Sequelize(config.database.name, config.database.username, config.database.password, {
+    host: config.database.hostname,
+    dialect: config.database.dialect,
+    port: config.database.port,
     operatorsAliases: false
 })
 

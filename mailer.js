@@ -1,16 +1,17 @@
 const nodemailer = require('nodemailer')
 const Email = require('email-templates')
-var EmailTemplate = require('email-templates').EmailTemplate
+const config = require('./config')
+let EmailTemplate = require('email-templates').EmailTemplate
 
 function initMailer() {
     let transporterConf = {
-        name: "gmail.com",
-        host: "smtp.gmail.com",
-        port: 465,
+        name: config.emailer.hostname,
+        host: config.emailer.smtp_host,
+        port: config.emailer.smtp_port,
         secure: true, 
         auth: {
-            user: "soske.app@gmail.com",
-            pass: "77ea34a9"
+            user: config.emailer.username,
+            pass: config.emailer.password
         },
         tls:{
             ciphers:'SSLv3'
@@ -20,7 +21,7 @@ function initMailer() {
         sendVerificationMail(address, username, name, tokenUrl) {
             const email = new Email({
                 message: {
-                  from: 'SOSKE for 8th SOS Camp <soske.app@gmail.com>',
+                  from: `${config.emailer.sender_fullname} <${transporterConf.auth.user}>`,
                   subject: 'SOSKE | Email Confirmation'
                 },
                 send: true,
